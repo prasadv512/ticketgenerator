@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="theme-color" content="#f28b8b">
+
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>PMPML Ticket</title>
@@ -9,7 +11,7 @@
       height:100%;
       margin:0;
       font-family: 'Poppins', sans-serif;
-      background:linear-gradient(180deg, #ebabab, #3c3c3c);
+      background:linear-gradient(180deg, #ebabab);
       display:flex;
       flex-direction:column;
       align-items:center;
@@ -39,7 +41,7 @@
 
     /* ✅ Ticket box */
     .ticket{
-      width:340px;
+      width:335px;
       background:linear-gradient(#2a2a2a,#191919);
       border-radius:14px;
       overflow:visible;
@@ -200,13 +202,13 @@
     .qr-bottom {
       width:320px;
       border-radius:12px;
-      margin-top:40px;
+      margin-top:70px;
       margin-bottom:18px;
       display:flex;
       align-items:center;
       padding:12px 14px;
       gap:65px;
-      background: linear-gradient(180deg, #6fe0a7, #36b96e);
+      background: linear-gradient(180deg, #469b71, #469b71);
       box-shadow: 0 6px 18px rgba(0,0,0,0.28);
       justify-content:flex-start;
             border: 3.5px solid rgba(255,255,255,0.8); /* ✅ new border */
@@ -223,7 +225,7 @@
       padding:4px;
       flex-shrink:0;
     }
-    .qr-bottom .qr-icon svg { width:8px; height:28px; fill: #0b920f; opacity:0.95; }
+    .qr-bottom .qr-icon svg { width:8px; height:28px; fill: #198f1d; opacity:0.95; }
     .qr-bottom .qr-text { font-size:13px; font-weight:800; color:#0b920f; opacity:0.95; }
 
     @media (max-width:360px){
@@ -315,69 +317,85 @@
   </div>
   <!-- =========================== END QR bottom section =========================== -->
 
-  <script>
-    (function(){
-      const routeVal = localStorage.getItem('route') || '372';
-      const ticketCountVal = localStorage.getItem('ticketCount') || '3F';
-      const fareVal = localStorage.getItem('fare') || '60';
-      const fromVal = localStorage.getItem('from') || 'Power House';
-      const toVal = localStorage.getItem('to') || 'Shivaji Chowk';
+ <script>
+(function(){
+  const routeVal = localStorage.getItem('route') || '372';
+  const ticketCountVal = localStorage.getItem('ticketCount') || '3F';
+  const fareVal = localStorage.getItem('fare') || '60';
+  const fromVal = localStorage.getItem('from') || 'Power House';
+  const toVal = localStorage.getItem('to') || 'Shivaji Chowk';
 
-      document.querySelector('.top-info .info-block:nth-child(1) .value').textContent = routeVal;
-      document.querySelector('.top-info .info-block:nth-child(2) .value').textContent = ticketCountVal;
-      document.querySelector('.top-info .info-block:nth-child(3) .fare-value').textContent = `₹${fareVal}`;
-      document.querySelector('.route div:nth-child(1)').textContent = fromVal;
-      document.querySelector('.route div:nth-child(3)').textContent = toVal;
+  document.querySelector('.top-info .info-block:nth-child(1) .value').textContent = routeVal;
+  document.querySelector('.top-info .info-block:nth-child(2) .value').textContent = ticketCountVal;
+  document.querySelector('.top-info .info-block:nth-child(3) .fare-value').textContent = `₹${fareVal}`;
+  document.querySelector('.route div:nth-child(1)').textContent = fromVal;
+  document.querySelector('.route div:nth-child(3)').textContent = toVal;
 
-      localStorage.clear();
+  localStorage.clear();
 
-      const bookEl = document.getElementById('bookTime');
-      const validEl = document.getElementById('validTime');
-      const countdownEl = document.getElementById('countdown');
-      const validityOffsetMinutes = 50;
+  const bookEl = document.getElementById('bookTime');
+  const validEl = document.getElementById('validTime');
+  const countdownEl = document.getElementById('countdown');
+  const ticketNumEl = document.querySelector('.ticket-number');
+  const validityOffsetMinutes = 50;
 
-      const booking = new Date();
-      const validity = new Date(booking.getTime() + validityOffsetMinutes * 60 * 1000);
+  const booking = new Date();
+  const validity = new Date(booking.getTime() + validityOffsetMinutes * 60 * 1000);
 
-      function formatDateShort(dt){
-        const day = dt.getDate();
-        const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-        const month = monthNames[dt.getMonth()];
-        const yearShort = String(dt.getFullYear()).slice(-2);
-        let hours = dt.getHours();
-        const mins = dt.getMinutes();
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-        hours = hours % 12;
-        if (hours === 0) hours = 12;
-        const hh = String(hours).padStart(2,'0');
-        const mm = String(mins).padStart(2,'0');
-        return `${day} ${month}, ${yearShort} | ${hh}:${mm} ${ampm}`;
+  // ✅ Generate Ticket Number: YYMMDDHHMM + 5 random letters
+  function generateTicketNumber() {
+    const yy = String(booking.getFullYear()).slice(-2);
+    const mm = String(booking.getMonth() + 1).padStart(2, '0');
+    const dd = String(booking.getDate()).padStart(2, '0');
+    const hh = String(booking.getHours()).padStart(2, '0');
+    const min = String(booking.getMinutes()).padStart(2, '0');
+    const letters = Array.from({length: 5}, () =>
+      String.fromCharCode(65 + Math.floor(Math.random() * 26))
+    ).join('');
+    return `${yy}${mm}${dd}${hh}${min}${letters}`;
+  }
+
+  ticketNumEl.textContent = generateTicketNumber();
+
+  function formatDateShort(dt){
+    const day = dt.getDate();
+    const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    const month = monthNames[dt.getMonth()];
+    const yearShort = String(dt.getFullYear()).slice(-2);
+    let hours = dt.getHours();
+    const mins = dt.getMinutes();
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    if (hours === 0) hours = 12;
+    const hh = String(hours).padStart(2,'0');
+    const mm = String(mins).padStart(2,'0');
+    return `${day} ${month}, ${yearShort} | ${hh}:${mm} ${ampm}`;
+  }
+
+  bookEl.textContent = formatDateShort(booking);
+  validEl.textContent = formatDateShort(validity);
+
+  function startCountdown(endDate){
+    function update(){
+      const now = new Date();
+      let diff = Math.floor((endDate - now) / 1000);
+      if (diff <= 0){
+        countdownEl.classList.add('expired');
+        countdownEl.textContent = "Expired";
+        clearInterval(intervalId);
+        return;
       }
-
-      bookEl.textContent = formatDateShort(booking);
-      validEl.textContent = formatDateShort(validity);
-
-      function startCountdown(endDate){
-        function update(){
-          const now = new Date();
-          let diff = Math.floor((endDate - now) / 1000);
-          if (diff <= 0){
-            countdownEl.classList.add('expired');
-            countdownEl.textContent = "Expired";
-            clearInterval(intervalId);
-            return;
-          }
-          const hrs = Math.floor(diff / 3600);
-          const mins = Math.floor((diff % 3600) / 60);
-          const secs = diff % 60;
-          function z(n){ return n < 10 ? '0' + n : String(n); }
-          countdownEl.textContent = `Expires in ${z(hrs)}:${z(mins)}:${z(secs)}`;
-        }
-        update();
-        const intervalId = setInterval(update, 1000);
-      }
-      startCountdown(validity);
-    })();
-  </script>
+      const hrs = Math.floor(diff / 3600);
+      const mins = Math.floor((diff % 3600) / 60);
+      const secs = diff % 60;
+      function z(n){ return n < 10 ? '0' + n : String(n); }
+      countdownEl.textContent = `Expires in ${z(hrs)}:${z(mins)}:${z(secs)}`;
+    }
+    update();
+    const intervalId = setInterval(update, 1000);
+  }
+  startCountdown(validity);
+})();
+</script>
 </body>
 </html>
