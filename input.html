@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Enter Ticket Details</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #202020;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .form-container {
+      background: linear-gradient(#2b2b2b, #191919);
+      padding: 24px 28px;
+      border-radius: 12px;
+      width: 320px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.6);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #f44336;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 6px;
+      color: #ccc;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 16px;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      outline: none;
+    }
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+    button {
+      width: 100%;
+      background: #d32f2f;
+      border: none;
+      color: #fff;
+      padding: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    button:hover {
+      background: #b71c1c;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>PMPML Ticket Generator</h2>
+
+    <label>Route</label>
+    <input type="text" id="route" placeholder="Enter route number">
+
+    <label>Ticket Count</label>
+    <input type="text" id="ticketCount" placeholder="Enter count (e.g. 2A)">
+
+    <label>Fare (₹)</label>
+    <input type="number" id="fare" placeholder="Enter fare amount">
+
+    <label>From</label>
+    <input type="text" id="from" placeholder="Starting place">
+
+    <label>To</label>
+    <input type="text" id="to" placeholder="Destination">
+
+    <button onclick="generateTicket()">Generate Ticket</button>
+  </div>
+
+  <script>
+    function generateTicket() {
+      const route = document.getElementById('route').value.trim();
+      const ticketCount = document.getElementById('ticketCount').value.trim();
+      const fare = document.getElementById('fare').value.trim();
+      const from = document.getElementById('from').value.trim();
+      const to = document.getElementById('to').value.trim();
+
+      if (!route || !ticketCount || !fare || !from || !to) {
+        alert('Please fill in all fields.');
+        return;
+      }
+
+      // store in localStorage so ticket page can read
+      localStorage.setItem('route', route);
+      localStorage.setItem('ticketCount', ticketCount);
+      localStorage.setItem('fare', fare);
+      localStorage.setItem('from', from);
+      localStorage.setItem('to', to);
+
+      // redirect to main ticket page
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>
