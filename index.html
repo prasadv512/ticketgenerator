@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="theme-color" content="#f28b8b">
+ <meta name="theme-color" content="#b68b5e">
+
 
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -233,6 +234,14 @@
       .ticket{ width:300px; }
       .logo-box img{ width:120px; }
       .qr-bottom { width:300px; }
+@media (max-width:600px) {
+  .ticket {
+    min-height: 460px;   /* 🔹 increase height — adjust number as needed */
+    padding-bottom: 28px; /* 🔹 gives a bit more breathing space at bottom */
+  }
+}
+
+
     }
   </style>
 </head>
@@ -405,99 +414,6 @@
   // ✅ Clear only AFTER everything is applied
   localStorage.clear();
 })();
-</script>
-
-  /*
-(function(){
-  const routeVal = localStorage.getItem('route') || '372';
-  const ticketCountVal = localStorage.getItem('ticketCount') || '3F';
-  const fareVal = localStorage.getItem('fare') || '60';
-  const fromVal = localStorage.getItem('from') || 'Power House';
-  const toVal = localStorage.getItem('to') || 'Shivaji Chowk';
-  const themeColor = localStorage.getItem('themeColor') || '#ebabab';
-
-  document.querySelector('.top-info .info-block:nth-child(1) .value').textContent = routeVal;
-  document.querySelector('.top-info .info-block:nth-child(2) .value').textContent = ticketCountVal;
-  document.querySelector('.top-info .info-block:nth-child(3) .fare-value').textContent = `₹${fareVal}`;
-  document.querySelector('.route div:nth-child(1)').textContent = fromVal;
-  document.querySelector('.route div:nth-child(3)').textContent = toVal;
-document.body.style.background = `linear-gradient(180deg, ${themeColor})`;
-  document.documentElement.style.setProperty('--theme-cutout', themeColor);
-  localStorage.clear();
-
-  const bookEl = document.getElementById('bookTime');
-  const validEl = document.getElementById('validTime');
-  const countdownEl = document.getElementById('countdown');
-  const ticketNumEl = document.querySelector('.ticket-number');
-  const validityOffsetMinutes = 50;
-
-  const booking = new Date();
-  const validity = new Date(booking.getTime() + validityOffsetMinutes * 60 * 1000);
-
-  // ✅ Generate Ticket Number: YYMMDDHHMM + 5 random letters
-  function generateTicketNumber() {
-    const yy = String(booking.getFullYear()).slice(-2);
-    const mm = String(booking.getMonth() + 1).padStart(2, '0');
-    const dd = String(booking.getDate()).padStart(2, '0');
-    const hh = String(booking.getHours()).padStart(2, '0');
-    const min = String(booking.getMinutes()).padStart(2, '0');
-    const letters = Array.from({length: 5}, () =>
-      String.fromCharCode(65 + Math.floor(Math.random() * 26))
-    ).join('');
-    return `${yy}${mm}${dd}${hh}${min}${letters}`;
-  }
-
-  ticketNumEl.textContent = generateTicketNumber();
-
-  function formatDateShort(dt){
-    const day = dt.getDate();
-    const monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-    const month = monthNames[dt.getMonth()];
-    const yearShort = String(dt.getFullYear()).slice(-2);
-    let hours = dt.getHours();
-    const mins = dt.getMinutes();
-    const ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    if (hours === 0) hours = 12;
-    const hh = String(hours).padStart(2,'0');
-    const mm = String(mins).padStart(2,'0');
-    return `${day} ${month}, ${yearShort} | ${hh}:${mm} ${ampm}`;
-  }
-
-  bookEl.textContent = formatDateShort(booking);
-  validEl.textContent = formatDateShort(validity);
-
-  function startCountdown(endDate){
-    function update(){
-      const now = new Date();
-      let diff = Math.floor((endDate - now) / 1000);
-      if (diff <= 0){
-        countdownEl.classList.add('expired');
-        countdownEl.textContent = "Expired";
-        clearInterval(intervalId);
-        return;
-      }
-      const hrs = Math.floor(diff / 3600);
-      const mins = Math.floor((diff % 3600) / 60);
-      const secs = diff % 60;
-      function z(n){ return n < 10 ? '0' + n : String(n); }
-      countdownEl.textContent = `Expires in ${z(hrs)}:${z(mins)}:${z(secs)}`;
-    }
-    update();
-    const intervalId = setInterval(update, 1000);
-  }
-  startCountdown(validity);
-})();
-/*
-const themeColor = localStorage.getItem('themeColor') || '#ebabab';
-
-// Apply to full background
-document.body.style.background = `linear-gradient(180deg, ${themeColor})`;
-
-// Apply to ticket side circles using CSS variables
-document.documentElement.style.setProperty('--theme-cutout', themeColor); */
-
-
 </script>
 </body>
 </html>
