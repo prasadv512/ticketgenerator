@@ -12,7 +12,8 @@
       height:100%;
       margin:0;
       font-family: 'Poppins', sans-serif;
-      background:linear-gradient(180deg, #ebabab);
+     background:#ebabab; /* plain background so JS can change it */
+
       display:flex;
       flex-direction:column;
       align-items:center;
@@ -230,19 +231,18 @@
     .qr-bottom .qr-icon svg { width:8px; height:28px; fill: #198f1d; opacity:0.95; }
     .qr-bottom .qr-text { font-size:13px; font-weight:800; color:#0b920f; opacity:0.95; }
 
-    @media (max-width:360px){
-      .ticket{ width:300px; }
-      .logo-box img{ width:120px; }
-      .qr-bottom { width:300px; }
-@media (max-width:600px) {
-  .ticket {
-    min-height: 460px;   /* 🔹 increase height — adjust number as needed */
-    padding-bottom: 28px; /* 🔹 gives a bit more breathing space at bottom */
-  }
+   @media (max-width:360px){
+  .ticket{ width:300px; }
+  .logo-box img{ width:120px; }
+  .qr-bottom { width:300px; }
 }
 
-
-    }
+@media (max-width:600px){
+  .ticket{
+    min-height: 530px;  /* ✅ taller ticket for mobile */
+    padding-bottom: 28px;
+  }
+}
   </style>
 </head>
 <body>
@@ -337,9 +337,12 @@
   const toVal = localStorage.getItem('to') || 'Shivaji Chowk';
   const themeColor = localStorage.getItem('themeColor') || '#ebabab';
 
+
+
   // ✅ Apply the selected color before clearing
-  document.body.style.background = `linear-gradient(180deg, ${themeColor})`;
+ document.body.style.background = themeColor;
   document.documentElement.style.setProperty('--theme-cutout', themeColor);
+  document.querySelector('meta[name="theme-color"]').setAttribute('content', themeColor);
 
   document.querySelector('.top-info .info-block:nth-child(1) .value').textContent = routeVal;
   document.querySelector('.top-info .info-block:nth-child(2) .value').textContent = ticketCountVal;
