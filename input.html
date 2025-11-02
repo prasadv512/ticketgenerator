@@ -75,6 +75,10 @@
     <label>Fare (₹)</label>
     <input type="number" id="fare" placeholder="Enter fare amount">
 
+    <label>Theme Color</label>
+<input type="color" id="themeColor" value="#ebabab">
+
+
     <label>From</label>
     <input type="text" id="from" placeholder="Starting place">
 
@@ -89,6 +93,9 @@
       const route = document.getElementById('route').value.trim();
       const ticketCount = document.getElementById('ticketCount').value.trim();
       const fare = document.getElementById('fare').value.trim();
+      const themeColor = document.getElementById('themeColor').value;
+localStorage.setItem('themeColor', themeColor);
+
       const from = document.getElementById('from').value.trim();
       const to = document.getElementById('to').value.trim();
 
